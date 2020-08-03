@@ -1,0 +1,6 @@
+/idea
+vendor/
+*.swp
+*.cache
+.gitignore.swp
+/build/*%
