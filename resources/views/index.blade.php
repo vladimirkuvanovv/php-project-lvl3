@@ -1,0 +1,25 @@
+@extends('layouts.layout')
+
+@section('content')
+<div class="main-block segments">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="caption">
+                    <h2>Page Analyzer</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <span class="form-label">Check web pages for free</span>
+                <form action="/domains" class="form" method="post">
+                    @csrf
+                    <input type="text" class="form-control" id="check" name="domain" placeholder="https://www.example.com">
+                    <button type="submit" class="btn btn-primary">Check</button>
+                </form>
+            </div>
+      </div>
+    </div>
+</div>
+@endsection
