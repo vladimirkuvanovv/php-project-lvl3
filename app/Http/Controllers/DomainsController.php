@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class DomainsController extends Controller
 {
@@ -33,7 +35,6 @@ class DomainsController extends Controller
     public function create()
     {
         //
-
     }
 
     /**
@@ -44,30 +45,31 @@ class DomainsController extends Controller
     public function store(Request $request)
     {
         if ($request->isMethod('post')) {
+            $request->validate(['domain' => 'required|url']);
+
             $url = $request->input('domain');
             $domain_parts = parse_url($url);
 
             $domainName = $domain_parts['scheme'] . '://' . $domain_parts['host'];
-            $domain = DB::table('domains')->select('name')->where('name', $domainName)->get();
-            dump($domain);
-
+            $domains = DB::table('domains')->select('id')->where('name', $domainName)->first();
+            $domain = collect($domains)->toArray();
 
             if (!$domain) {
-                dump(1);
-                $domain_id = DB::table('domains')->insertGetId(['name' => $domainName]);
-                dump($domain_id);
+                $domain_id = DB::table('domains')->insertGetId([
+                    'name'       => $domainName,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
 
                 if ($domain_id) {
-                    $domain = DB::table('domains')->select()->where('id', $domain_id)->get();
                     flash('Url was added')->success();
 
-                    return redirect()->route('domains.show');
+                    return redirect()->route('domains.show', $domain_id);
                 }
             }
 
             flash('Url already exists');
-
-            return redirect()->route('domains.show');
+            return redirect()->route('domains.show', $domain['id']);
         }
     }
 
@@ -80,14 +82,11 @@ class DomainsController extends Controller
     public function show($id)
     {
         if ($id) {
-            $domain = DB::table('domains')->select()->where('id', $id)->get();
+            $domain = DB::table('domains')->select()->where('id', $id)->first();
 
-            //найти данные по id и прокинуть в шаблон
             if (view()->exists('domain') && $domain) {
                 return view('domain', ['domain' => $domain]);
             }
-
-            return view('domain');
         }
 
         abort(404);
