@@ -17,7 +17,6 @@ class DomainsController extends Controller
      */
     public function index()
     {
-        //
         $domains = DB::table('domains')->select()->get();
 
         if (view()->exists('domains')) {
@@ -45,7 +44,7 @@ class DomainsController extends Controller
     public function store(Request $request)
     {
         if ($request->isMethod('post')) {
-            $request->validate(['domain' => 'required|url']);
+            $request->validate(['domain' => 'required|url|max:255']);
 
             $url = $request->input('domain');
             $domain_parts = parse_url($url);

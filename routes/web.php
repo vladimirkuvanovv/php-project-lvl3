@@ -15,9 +15,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', ['as' => 'index', 'uses' => 'IndexController@index']);
 
-//Route::get('/domain', ['as' => 'domain', 'uses' => 'DomainController@index']);
-
-//Route::get('/domains', ['as' => 'domains', 'uses' => 'DomainsController@index']);
-
-//list
 Route::resource('domains', 'DomainsController');
