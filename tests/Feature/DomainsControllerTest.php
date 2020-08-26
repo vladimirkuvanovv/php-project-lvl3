@@ -3,10 +3,9 @@
 namespace Tests\Feature;
 
 use Carbon\Carbon;
-use Faker\Generator;
-use Faker\Provider\Address;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\DB;
@@ -17,11 +16,14 @@ class DomainsControllerTest extends TestCase
     use DatabaseTransactions, DatabaseMigrations;
 
     protected $id;
-    protected $domain = 'https://www.w3schools.com';
+    protected $domain;
 
     protected function setUp(): void
     {
         parent::setUp();
+
+        $faker = Factory::create();
+        $this->domain = $faker->url;
 
         $this->id = DB::table('domains')->insertGetId([
             'name'       => $this->domain,
