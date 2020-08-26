@@ -60,21 +60,21 @@
     <!-- end navbar -->
 </header>
 
+<div class="wrapper">
 
-<main>
-    @yield('content')
-</main>
+    <main>
+        @yield('content')
+    </main>
 
-<!-- footer -->
-<footer>
-    <div class="footer segments">
+    <!-- footer -->
+    <footer>
         <div class="container">
             <div class="box-content">
                 <p>Copyright © All Right Reserved</p>
             </div>
         </div>
-    </div>
-</footer>
-<!-- end footer -->
+    </footer>
+    <!-- end footer -->
+</div>
 </body>
 </html>
