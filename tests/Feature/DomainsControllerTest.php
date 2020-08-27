@@ -6,15 +6,11 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Faker\Factory;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class DomainsControllerTest extends TestCase
 {
-    use DatabaseTransactions, DatabaseMigrations;
-
     protected $id;
     protected $domain;
 
