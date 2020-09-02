@@ -64,7 +64,12 @@
 
     <main>
         @yield('content')
+        <div class="additional">
+            @yield('additional-content')
+        </div>
     </main>
+
+
 
     <!-- footer -->
     <footer>

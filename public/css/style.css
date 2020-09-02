@@ -106,6 +106,10 @@ ul {
     border-radius: 3px;
 }
 
+.btn-block {
+    margin: 20px 0;
+}
+
 /*button default*/
 .button {
     background: #ff8c05;
