@@ -15,4 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', ['as' => 'index', 'uses' => 'IndexController@index']);
 
+//Route::resource('domain', 'DomainCheckController');
+Route::post('/domains/{id}/check', ['as' => 'check', 'uses' => 'DomainCheckController@store']);
 Route::resource('domains', 'DomainsController');
