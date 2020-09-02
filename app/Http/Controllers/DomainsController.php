@@ -17,7 +17,10 @@ class DomainsController extends Controller
      */
     public function index()
     {
-        $domains = DB::table('domains')->select()->get();
+        $domains = DB::table('domains')
+            ->leftJoin('domain_checks', 'domains.id', '=', 'domain_checks.domain_id')
+            ->select('domains.*', 'domain_checks.status_code')
+            ->get();
 
         if (view()->exists('domains')) {
             return view('domains', ['domains' => $domains]);
@@ -83,8 +86,10 @@ class DomainsController extends Controller
         if ($id) {
             $domain = DB::table('domains')->select()->where('id', $id)->first();
 
+            $domain_checks = DB::table('domain_checks')->select()->where('domain_id', $id)->get();
+
             if (view()->exists('domain') && $domain) {
-                return view('domain', ['domain' => $domain]);
+                return view('domain', ['domain' => $domain, 'domain_checks' => $domain_checks]);
             }
         }
 
