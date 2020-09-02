@@ -34,21 +34,23 @@ class DomainCheckControllerTest extends TestCase
      */
     public function testStore()
     {
-        $response = $this->post(route('check', ['id' => $this->id]));
+        $expected = [
+            'domain_id' => $this->id,
+            'status_code' => 200,
+            'keywords' => 'test keywords',
+            'h1' => 'test h1',
+            'description' => 'test description',
+        ];
 
-        $response->assertStatus(302);
+        $html = file_get_contents(__DIR__ . '/../fixtures/fixture.html');
+
+        Http::fake([$this->domain => Http::response($html, 200)]);
+
+        $response = $this->post(route('check', ['id' => $this->id]));
 
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 
-        $this->assertDatabaseHas('domain_checks', ['domain_id' => $this->id]);
-    }
-
-    public function testClientRequest()
-    {
-        Http::fake();
-
-        $response = Http::post(route('check', ['id' => $this->id]));
-        $this->assertSame(200, $response->status());
+        $this->assertDatabaseHas('domain_checks', $expected);
     }
 }
