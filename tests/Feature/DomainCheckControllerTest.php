@@ -35,16 +35,18 @@ class DomainCheckControllerTest extends TestCase
     public function testStore()
     {
         $expected = [
-            'domain_id' => $this->id,
+            'domain_id'   => $this->id,
             'status_code' => 200,
-            'keywords' => 'test keywords',
-            'h1' => 'test h1',
+            'keywords'    => 'test keywords',
+            'h1'          => 'test h1',
             'description' => 'test description',
         ];
 
         $html = file_get_contents(__DIR__ . '/../fixtures/fixture.html');
 
-        Http::fake([$this->domain => Http::response($html, 200)]);
+        Http::fake([
+            $this->domain => Http::response($html, 200)
+        ]);
 
         $response = $this->post(route('check', ['id' => $this->id]));
 
