@@ -4,7 +4,7 @@ start:
 setup:
 	composer install
 	cp -n .env.example .env || true
-	php artisan key:generate --ansi
+	php artisan key:gen --ansi
 	touch database/database.sqlite || true
 	php artisan migrate
 	php artisan db:seed
