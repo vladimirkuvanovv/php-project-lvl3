@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Telescope\Telescope;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,6 +16,11 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+/*        if ($this->app->isLocal()) {
+            $this->app->register(TelescopeServiceProvider::class);
+        }
+
+        Telescope::ignoreMigrations();*/
     }
 
     /**
@@ -25,10 +31,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        DB::listen(function ($query) {
+/*        DB::listen(function ($query) {
             dump($query->sql);
 //            dump($query->bindings);
 //            dump($query->time);
-        });
+        });*/
     }
 }
