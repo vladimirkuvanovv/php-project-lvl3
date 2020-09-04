@@ -7,18 +7,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
-    - name: PHP Security Checker
-      uses: StephaneBour/actions-php-security-checker@1.0
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          extensions: mbstring, curl, dom, xml, zip, sqlite
+          tools: prestissimo
+          php-version: '7.4'
 
-    - name: Setup project
-      run: make setup
+      - name: Setup project
+        run: make setup
 
-    - name: Check lint
-      run: make lint
+      - name: Check lint
+        run: make lint
 
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
-      run: make test
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        run: make test-coverage
+
+      - name: PHP Security Checker
+        uses: StephaneBour/actions-php-security-checker@1.0
