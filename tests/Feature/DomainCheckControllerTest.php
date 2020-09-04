@@ -19,7 +19,7 @@ class DomainCheckControllerTest extends TestCase
         parent::setUp();
 
         $faker = Factory::create();
-        $this->domain = $faker->url;
+        $this->domain = 'https://translate.yandex.ru';
 
         $this->id = DB::table('domains')->insertGetId([
             'name'       => $this->domain,
