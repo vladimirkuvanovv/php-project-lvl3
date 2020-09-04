@@ -25,7 +25,7 @@ deploy:
 	git push heroku master
 
 lint:
-	composer exec phpcs -v
+	composer phpcs
 
 lint-fix:
 	composer phpcbf
