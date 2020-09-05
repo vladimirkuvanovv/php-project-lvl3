@@ -25,7 +25,7 @@ deploy:
 	git push heroku master
 
 lint:
-	composer run-script phpcs -- --standard=PSR12 app tests
+	composer run-script phpcs -- --standard=PSR12 app/ tests/ routes/ resources/
 
 lint-fix:
 	composer phpcbf
