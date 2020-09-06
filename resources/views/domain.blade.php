@@ -6,7 +6,6 @@
         <div class="row ">
             <div class="col-12">
                 <div class="caption">
-                    {{ var_dump($domain) }}
                     <span>Site: {{ $domain['name'] }}</span>
                 </div>
                 <table class="table table-dark table-striped table-bordered">
@@ -50,7 +49,6 @@
                         <button type="submit" class="btn btn-primary">Run check</button>
                     </div>
                 </form>
-{{ var_dump($domain_checks) }}
                 <table class="table table-dark table-striped table-bordered">
                     <thead>
                         <tr>
