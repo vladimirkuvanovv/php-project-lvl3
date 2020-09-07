@@ -17,6 +17,7 @@ class DomainsController extends Controller
     public function index()
     {
         $domains = DB::table('domains')
+            ->distinct()
             ->leftJoin('domain_checks', 'domains.id', '=', 'domain_checks.domain_id')
             ->select('domains.*', 'domain_checks.status_code')
             ->get();
