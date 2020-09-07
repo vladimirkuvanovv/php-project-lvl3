@@ -47,8 +47,8 @@ class DomainsController extends Controller
             if (!$domain) {
                 $domain_id = DB::table('domains')->insertGetId([
                     'name'       => $domainName,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
+                    'created_at' => Carbon::now('Europe/Moscow'),
+                    'updated_at' => Carbon::now('Europe/Moscow'),
                 ]);
 
                 if ($domain_id) {
