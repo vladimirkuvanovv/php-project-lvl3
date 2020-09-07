@@ -43,7 +43,7 @@
                     <h3>Checks</h3>
                 </div>
 
-                <form action="{{ route('check', [$domain['id']]) }}" method="post">
+                <form action="{{ route('check', [$domain->id]) }}" method="post">
                     @csrf
                     <div class="btn-block">
                         <button type="submit" class="btn btn-primary">Run check</button>
