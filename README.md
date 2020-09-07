@@ -5,4 +5,4 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/06931fc5ad6397442ccd/test_coverage)](https://codeclimate.com/github/vladimirkuvanovv/php-project-lvl3/test_coverage)
 
 Ссылка на проект: 
-https://page-analyzer5.herokuapp.com/
+https://young-plains-70148.herokuapp.com/
