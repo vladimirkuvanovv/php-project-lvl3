@@ -21,10 +21,10 @@
                 @if(isset($domains))
                     @foreach($domains as $domain)
                         <tr>
-                            <td>{{ $domain['id'] }}</td>
-                            <td>{{ $domain['name'] }}</td>
-                            <td>{{ $domain['updated_at'] }}</td>
-                            <td>{{ $domain['status_code'] }}</td>
+                            <td>{{ $domain->id }}</td>
+                            <td>{{ $domain->name }}</td>
+                            <td>{{ $domain->updated_at }}</td>
+                            <td>{{ $domain->status_code }}</td>
                         </tr>
                     @endforeach
                 @endif

@@ -63,12 +63,12 @@
                     <tbody>
                     @foreach($domain_checks as $domain_check)
                         <tr>
-                            <td>{{ $domain_check['id'] }}</td>
-                            <td>{{ $domain_check['status_code'] }}</td>
-                            <td>{{ $domain_check['h1'] }}</td>
-                            <td>{{ $domain_check['keywords'] }}</td>
-                            <td>{{ $domain_check['description'] }}</td>
-                            <td>{{ $domain_check['created_at'] }}</td>
+                            <td>{{ $domain_check->id }}</td>
+                            <td>{{ $domain_check->status_code }}</td>
+                            <td>{{ $domain_check->h1 }}</td>
+                            <td>{{ $domain_check->keywords }}</td>
+                            <td>{{ $domain_check->description }}</td>
+                            <td>{{ $domain_check->created_at }}</td>
                         </tr>
                     @endforeach
                     </tbody>

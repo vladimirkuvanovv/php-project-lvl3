@@ -18,13 +18,12 @@ class DomainCheckController extends Controller
      */
     public function store(Request $request, $id)
     {
-        //
         if ($request->isMethod('post')) {
             $domain = DB::table('domains')->select()->where('id', $id)->first();
 
             $domain_check_id = 0;
             if ($domain) {
-                $response = Http::get($domain['name']);
+                $response = Http::get($domain->name);
                 $html = $response->body();
 
                 $document = new Document($html);
@@ -59,11 +58,11 @@ class DomainCheckController extends Controller
 
             if ($domain_check_id) {
                 flash('Website has been checked!');
-                return redirect()->route('domains.show', $domain['id']);
+                return redirect()->route('domains.show', $domain->id);
             }
 
             flash('Website has not been checked!');
-            return redirect()->route('domains.show', $domain['id']);
+            return redirect()->route('domains.show', $domain->id);
         }
 
         abort(404);
