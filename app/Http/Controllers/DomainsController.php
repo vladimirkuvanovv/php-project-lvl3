@@ -42,8 +42,7 @@ class DomainsController extends Controller
             $domain_parts = parse_url($url);
 
             $domainName = $domain_parts['scheme'] . '://' . $domain_parts['host'];
-            $domains = DB::table('domains')->select('id')->where('name', $domainName)->first();
-            $domain = collect($domains)->toArray();
+            $domain = DB::table('domains')->select('id')->where('name', $domainName)->first();
 
             if (!$domain) {
                 $domain_id = DB::table('domains')->insertGetId([
