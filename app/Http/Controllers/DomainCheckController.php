@@ -21,29 +21,29 @@ class DomainCheckController extends Controller
         if ($request->isMethod('post')) {
             $domain = DB::table('domains')->select()->where('id', $id)->first();
 
-            $domain_check_id = 0;
+            $domainCheckId = 0;
             if ($domain) {
                 $response = Http::get($domain->name);
                 $html = $response->body();
 
                 $document = new Document($html);
 
-                $h1_element = $document->first('h1');
-                if (isset($h1_element)) {
-                    $h1 = $h1_element->text();
+                $h1Element = $document->first('h1');
+                if (isset($h1Element)) {
+                    $h1 = $h1Element->text();
                 }
 
-                $meta_keywords_element = $document->first('meta[name=keywords]');
-                if (isset($meta_keywords_element)) {
-                    $keywords = $meta_keywords_element->getAttribute('content');
+                $metaKeywordsElement = $document->first('meta[name=keywords]');
+                if (isset($metaKeywordsElement)) {
+                    $keywords = $metaKeywordsElement->getAttribute('content');
                 }
 
-                $meta_description_element = $document->first('meta[name=description]');
-                if (isset($meta_description_element)) {
-                    $description = $meta_description_element->getAttribute('content');
+                $metaDescriptionElement = $document->first('meta[name=description]');
+                if (isset($metaDescriptionElement)) {
+                    $description = $metaDescriptionElement->getAttribute('content');
                 }
 
-                $domain_check_id = DB::table('domain_checks')->insertGetId([
+                $domainCheckId = DB::table('domain_checks')->insertGetId([
                     'domain_id'   => $id,
                     'status_code' => $response->status(),
                     'keywords'    => $keywords ?? null,
@@ -56,7 +56,7 @@ class DomainCheckController extends Controller
                 DB::table('domains')->where('id', $id)->update(['updated_at' => Carbon::now('Europe/Moscow')]);
             }
 
-            if ($domain_check_id) {
+            if ($domainCheckId) {
                 flash('Website has been checked!');
                 return redirect()->route('domains.show', $domain->id);
             }

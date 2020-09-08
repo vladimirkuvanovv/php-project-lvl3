@@ -40,22 +40,22 @@ class DomainsController extends Controller
             $request->validate(['domain' => 'required|url|max:255']);
 
             $url = $request->input('domain');
-            $domain_parts = parse_url($url);
+            $domainParts = parse_url($url);
 
-            $domainName = $domain_parts['scheme'] . '://' . $domain_parts['host'];
+            $domainName = $domainParts['scheme'] . '://' . $domainParts['host'];
             $domain = DB::table('domains')->select('id')->where('name', $domainName)->first();
 
             if (!$domain) {
-                $domain_id = DB::table('domains')->insertGetId([
+                $domainId = DB::table('domains')->insertGetId([
                     'name'       => $domainName,
                     'created_at' => Carbon::now('Europe/Moscow'),
                     'updated_at' => Carbon::now('Europe/Moscow'),
                 ]);
 
-                if ($domain_id) {
+                if ($domainId) {
                     flash('Url was added')->success();
 
-                    return redirect()->route('domains.show', $domain_id);
+                    return redirect()->route('domains.show', $domainId);
                 }
             }
 
@@ -74,10 +74,10 @@ class DomainsController extends Controller
         if ($id) {
             $domain = DB::table('domains')->select()->where('id', $id)->first();
 
-            $domain_checks = DB::table('domain_checks')->select()->where('domain_id', $id)->get();
+            $domainChecks = DB::table('domain_checks')->select()->where('domain_id', $id)->get();
 
             if (view()->exists('domain') && $domain) {
-                return view('domain', ['domain' => $domain, 'domain_checks' => $domain_checks ?? []]);
+                return view('domain', ['domain' => $domain, 'domain_checks' => $domainChecks ?? []]);
             }
         }
 
