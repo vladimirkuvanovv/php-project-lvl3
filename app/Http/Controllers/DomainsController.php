@@ -77,7 +77,7 @@ class DomainsController extends Controller
             $domainChecks = DB::table('domain_checks')->select()->where('domain_id', $id)->get();
 
             if (view()->exists('domain') && $domain) {
-                return view('domain', ['domain' => $domain, 'domain_checks' => $domainChecks ?? []]);
+                return view('domain', ['domain' => $domain, 'domainChecks' => $domainChecks ?? []]);
             }
         }
 

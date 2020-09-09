@@ -62,14 +62,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($domain_checks as $domain_check)
+                    @foreach($domainChecks as $domainCheck)
                         <tr>
-                            <td>{{ $domain_check->id }}</td>
-                            <td>{{ $domain_check->status_code }}</td>
-                            <td>{{ $domain_check->h1 }}</td>
-                            <td>{{ $domain_check->keywords }}</td>
-                            <td>{{ $domain_check->description }}</td>
-                            <td>{{ $domain_check->created_at }}</td>
+                            <td>{{ $domainCheck->id }}</td>
+                            <td>{{ $domainCheck->status_code }}</td>
+                            <td>{{ $domainCheck->h1 }}</td>
+                            <td>{{ $domainCheck->keywords }}</td>
+                            <td>{{ $domainCheck->description }}</td>
+                            <td>{{ $domainCheck->created_at }}</td>
                         </tr>
                     @endforeach
                     </tbody>
