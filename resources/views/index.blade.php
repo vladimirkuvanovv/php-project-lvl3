@@ -1,7 +1,6 @@
 @extends('layouts.layout')
 
 @section('content')
-<div class="main-block segments">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -28,7 +27,6 @@
                     <button type="submit" class="btn btn-primary">Check</button>
                 </form>
             </div>
-      </div>
+        </div>
     </div>
-</div>
 @endsection

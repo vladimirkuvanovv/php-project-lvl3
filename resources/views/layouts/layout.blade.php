@@ -7,8 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Page Analyzer</title>
     <link rel="icon" href="images/favicon.png">
-    <title>Bleak - Personal Portfolio Template</title>
-
     <!-- font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,500i,700,900&display=swap" rel="stylesheet">
     <!-- end font -->
@@ -18,19 +16,12 @@
 
 {{--    <link rel="stylesheet" href="css/bootstrap.css">--}}
     <link rel="stylesheet" href="/css/font-awesome.css">
-    <link rel="stylesheet" href="/css/fakeLoader.css">
-    <link rel="stylesheet" href="/css/owl.carousel.css">
-    <link rel="stylesheet" href="/css/owl.theme.default.css">
-    <link rel="stylesheet" href="/css/magnific-popup.css">
     <link rel="stylesheet" href="/css/style.css">
 
 </head>
 <body>
-<!-- loader -->
-<div class="fakeLoader"></div>
-<!-- loader -->
 <!-- header -->
-<header id="home">
+<header class="home">
     <!-- navbar -->
 @section('navbar')
     <div class="container">
@@ -61,25 +52,20 @@
 </header>
 
 <div class="wrapper">
+<main class="flex-grow-1">
+    @yield('content')
+    @yield('additional-content')
+</main>
 
-    <main>
-        @yield('content')
-        <div class="additional">
-            @yield('additional-content')
+<!-- footer -->
+<footer>
+    <div class="container">
+        <div class="box-content">
+            <p>Copyright © All Right Reserved</p>
         </div>
-    </main>
-
-
-
-    <!-- footer -->
-    <footer>
-        <div class="container">
-            <div class="box-content">
-                <p>Copyright © All Right Reserved</p>
-            </div>
-        </div>
-    </footer>
-    <!-- end footer -->
+    </div>
+</footer>
+<!-- end footer -->
 </div>
 </body>
 </html>
