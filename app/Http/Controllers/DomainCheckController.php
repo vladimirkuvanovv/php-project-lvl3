@@ -44,7 +44,6 @@ class DomainCheckController extends Controller
 
             flash('Website has been checked!');
             return redirect()->route('domains.show', $domain->id);
-
         } catch (\Exception $e) {
             flash('Website has not been checked!');
             return redirect()->route('domains.show', $domain->id);
