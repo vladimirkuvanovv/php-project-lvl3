@@ -3,7 +3,7 @@ body {
     font-family: 'Roboto', sans-serif;
     background: #212121;
     color: #fafafa;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 22px;
     min-height: 100vh;
     display: flex;
@@ -52,8 +52,7 @@ a {
     color: #fff;
 }
 a:hover {
-    color: #fff;
-    text-decoration: none;
+    color: #1196c1;
 }
 a:focus {
     outline: 0;
@@ -138,15 +137,6 @@ ul {
     animation-delay: .1s;
     z-index: -1000;
 }
-
-@keyframes buttons {
-    0% {
-        transform: translateY(100%);
-    }
-    100% {
-        transform: translateY(-100%);
-    }
-}
 /*navbar*/
 .navbar {
     margin: 27px 0;
@@ -201,25 +191,6 @@ ul {
     margin-right: 20px;
 }
 
-
-
-@keyframes titles {
-    0% {
-        transform: translateY(100%);
-    }
-    100% {
-        transform: translateY(-101%);
-    }
-}
-@keyframes subtitles {
-    0% {
-        transform: translateY(100%);
-    }
-    100% {
-        transform: translateY(-101%);
-    }
-}
-
 main.flex-grow-1 {
     flex-grow: 1;
     /*flex: 1 0 auto;*/
@@ -228,6 +199,7 @@ main.flex-grow-1 {
 /*footer*/
 footer {
     text-align: center;
+    font-size: 14px;
 }
 
 .container {

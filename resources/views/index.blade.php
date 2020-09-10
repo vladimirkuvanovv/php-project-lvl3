@@ -21,7 +21,7 @@
                     </div>
                 @endif
                 <span class="form-label">Check web pages for free</span>
-                <form action="/domains" class="form" method="post">
+                <form action="{{ route('domains.index') }}" class="form" method="post">
                     @csrf
                     <input type="text" class="form-control" id="check" name="domain" value="{{ old('domain') }}" placeholder="https://www.example.com">
                     <button type="submit" class="btn btn-primary">Check</button>

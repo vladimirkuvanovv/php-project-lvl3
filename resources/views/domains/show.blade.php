@@ -52,14 +52,14 @@
                 </form>
                 <table class="table table-dark table-striped table-bordered">
                     <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Status Code</th>
-                            <th>h1</th>
-                            <th>Keywords</th>
-                            <th>Description</th>
-                            <th>Created At</th>
-                        </tr>
+                    <tr>
+                        <th>Id</th>
+                        <th>Status Code</th>
+                        <th>h1</th>
+                        <th>Keywords</th>
+                        <th>Description</th>
+                        <th>Created At</th>
+                    </tr>
                     </thead>
                     <tbody>
                     @foreach($domainChecks as $domainCheck)

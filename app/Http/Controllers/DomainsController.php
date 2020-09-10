@@ -18,15 +18,21 @@ class DomainsController extends Controller
     {
         $domains = DB::table('domains')
             ->distinct()
-            ->leftJoin('domain_checks', 'domains.id', '=', 'domain_checks.domain_id')
-            ->select('domains.*', 'domain_checks.status_code')
+            ->select()
+            ->orderBy('id')
             ->get();
 
-        if (view()->exists('domains')) {
-            return view('domains', ['domains' => $domains]);
+        $domainsStatusCodes = DB::table('domain_checks')
+            ->distinct()
+            ->select('domain_id', 'status_code')
+            ->get();
+        
+        $lastChecks = [];
+        foreach ($domainsStatusCodes as $domainsStatusCode) {
+            $lastChecks[$domainsStatusCode->domain_id] = $domainsStatusCode->status_code;
         }
-
-        abort(404);
+        
+        return view('domains.index', ['domains' => $domains, 'lastChecks' => $lastChecks]);
     }
 
     /**
@@ -36,32 +42,30 @@ class DomainsController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->isMethod('post')) {
-            $request->validate(['domain' => 'required|url|max:255']);
+        $request->validate(['domain' => 'required|url|max:255']);
 
-            $url = $request->input('domain');
-            $domainParts = parse_url($url);
+        $url = $request->input('domain');
+        $domainParts = parse_url($url);
 
-            $domainName = $domainParts['scheme'] . '://' . $domainParts['host'];
-            $domain = DB::table('domains')->select('id')->where('name', $domainName)->first();
+        $domainName = $domainParts['scheme'] . '://' . $domainParts['host'];
+        $domain = DB::table('domains')->select('id')->where('name', $domainName)->first();
 
-            if (!$domain) {
-                $domainId = DB::table('domains')->insertGetId([
-                    'name'       => $domainName,
-                    'created_at' => Carbon::now('Europe/Moscow'),
-                    'updated_at' => Carbon::now('Europe/Moscow'),
-                ]);
+        if (!$domain) {
+            $domainId = DB::table('domains')->insertGetId([
+                'name'       => $domainName,
+                'created_at' => Carbon::now('Europe/Moscow'),
+                'updated_at' => Carbon::now('Europe/Moscow'),
+            ]);
 
-                if ($domainId) {
-                    flash('Url was added')->success();
+            if ($domainId) {
+                flash('Url was added')->success();
 
-                    return redirect()->route('domains.show', $domainId);
-                }
+                return redirect()->route('domains.show', $domainId);
             }
-
-            flash('Url already exists');
-            return redirect()->route('domains.show', $domain->id);
         }
+
+        flash('Url already exists');
+        return redirect()->route('domains.show', $domain->id);
     }
 
     /**
@@ -73,14 +77,15 @@ class DomainsController extends Controller
     {
         if ($id) {
             $domain = DB::table('domains')->select()->where('id', $id)->first();
+            abort_unless((bool)$domain, 404);
 
-            $domainChecks = DB::table('domain_checks')->select()->where('domain_id', $id)->get();
+            $domainChecks = DB::table('domain_checks')
+                ->select()
+                ->where('domain_id', $id)
+                ->orderBy('domain_id')
+                ->get();
 
-            if (view()->exists('domain') && $domain) {
-                return view('domain', ['domain' => $domain, 'domainChecks' => $domainChecks ?? []]);
-            }
+            return view('domains.show', ['domain' => $domain, 'domainChecks' => $domainChecks ?? []]);
         }
-
-        abort(404);
     }
 }
