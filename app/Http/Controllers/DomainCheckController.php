@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use DiDom\Document;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -44,9 +45,8 @@ class DomainCheckController extends Controller
 
             flash('Website has been checked!');
             return redirect()->route('domains.show', $domain->id);
-        } catch (\Exception $e) {
-            flash('Website has not been checked!');
-            return redirect()->route('domains.show', $domain->id);
+        } catch (RequestException $e) {
+            flash('Website has not been checked!')->error();
         }
     }
 }
