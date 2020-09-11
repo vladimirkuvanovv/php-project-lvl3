@@ -28,7 +28,7 @@ class DomainCheckController extends Controller
             $document = new Document($html);
             $h1 = optional($document->first('h1'))->text();
             $keywords = optional($document->first('meta[name=keywords]'))->getAttribute('content');
-            $description = optional($document->first('meta[name=keywords]'))->getAttribute('content');
+            $description = optional($document->first('meta[name=description]'))->getAttribute('content');
 
             DB::table('domain_checks')->insertGetId([
                 'domain_id'   => $id,
