@@ -19,7 +19,8 @@ class DomainCheckController extends Controller
      */
     public function store(Request $request, $id)
     {
-        $domain = DB::table('domains')->select()->where('id', $id)->first();
+        $domain = DB::table('domains')->find($id);
+
         abort_unless((bool)$domain, 404);
 
         try {
