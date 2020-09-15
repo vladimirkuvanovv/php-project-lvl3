@@ -44,9 +44,10 @@ class DomainCheckController extends Controller
             DB::table('domains')->where('id', $id)->update(['updated_at' => Carbon::now('Europe/Moscow')]);
 
             flash('Website has been checked!');
-            return redirect()->route('domains.show', $domain->id);
         } catch (RequestException $e) {
             flash('Website has not been checked!')->error();
         }
+
+        return redirect()->route('domains.show', $domain->id);
     }
 }
