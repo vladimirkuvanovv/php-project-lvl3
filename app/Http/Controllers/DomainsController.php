@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 class DomainsController extends Controller
 {
@@ -27,11 +25,12 @@ class DomainsController extends Controller
             ->select('domain_id', 'status_code')
             ->get();
         
-        $lastChecks = [];
-        foreach ($domainsStatusCodes as $domainsStatusCode) {
-            $lastChecks[$domainsStatusCode->domain_id] = $domainsStatusCode->status_code;
-        }
-        
+        $lastChecks = collect($domainsStatusCodes)
+            ->mapWithKeys(function ($domainsStatusCode) {
+                return [$domainsStatusCode->domain_id => $domainsStatusCode->status_code];
+            })
+            ->toArray();
+
         return view('domains.index', ['domains' => $domains, 'lastChecks' => $lastChecks]);
     }
 
@@ -50,22 +49,23 @@ class DomainsController extends Controller
         $domainName = $domainParts['scheme'] . '://' . $domainParts['host'];
         $domain = DB::table('domains')->select('id')->where('name', $domainName)->first();
 
-        if (!$domain) {
-            $domainId = DB::table('domains')->insertGetId([
-                'name'       => $domainName,
-                'created_at' => Carbon::now('Europe/Moscow'),
-                'updated_at' => Carbon::now('Europe/Moscow'),
-            ]);
+        if ($domain) {
+            flash('Url already exists');
 
-            if ($domainId) {
-                flash('Url was added')->success();
-
-                return redirect()->route('domains.show', $domainId);
-            }
+            return redirect()->route('domains.show', $domain->id);
         }
 
-        flash('Url already exists');
-        return redirect()->route('domains.show', $domain->id);
+        $domainId = DB::table('domains')->insertGetId([
+            'name'       => $domainName,
+            'created_at' => Carbon::now('Europe/Moscow'),
+            'updated_at' => Carbon::now('Europe/Moscow'),
+        ]);
+
+        if ($domainId) {
+            flash('Url was added')->success();
+
+            return redirect()->route('domains.show', $domainId);
+        }
     }
 
     /**
@@ -75,17 +75,15 @@ class DomainsController extends Controller
      */
     public function show($id)
     {
-        if ($id) {
-            $domain = DB::table('domains')->select()->where('id', $id)->first();
-            abort_unless((bool)$domain, 404);
+        $domain = DB::table('domains')->select()->where('id', $id)->first();
+        abort_unless((bool)$domain, 404);
 
-            $domainChecks = DB::table('domain_checks')
-                ->select()
-                ->where('domain_id', $id)
-                ->orderBy('domain_id')
-                ->get();
+        $domainChecks = DB::table('domain_checks')
+            ->select()
+            ->where('domain_id', $id)
+            ->orderBy('domain_id')
+            ->get();
 
-            return view('domains.show', ['domain' => $domain, 'domainChecks' => $domainChecks ?? []]);
-        }
+        return view('domains.show', ['domain' => $domain, 'domainChecks' => $domainChecks ?? []]);
     }
 }
