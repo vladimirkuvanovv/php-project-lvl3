@@ -26,11 +26,8 @@ class DomainsController extends Controller
             ->get();
         
         $lastChecks = collect($domainsStatusCodes)
-            ->mapWithKeys(function ($domainsStatusCode) {
-                return [
-                    $domainsStatusCode->domain_id => $domainsStatusCode->status_code
-                ];
-            })->toArray();
+            ->mapWithKeys(fn($domainsStatusCode) => [$domainsStatusCode->domain_id => $domainsStatusCode->status_code])
+            ->toArray();
 
         return view('domains.index', ['domains' => $domains, 'lastChecks' => $lastChecks]);
     }
