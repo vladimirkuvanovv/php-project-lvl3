@@ -12,17 +12,17 @@ use Tests\TestCase;
 class DomainsControllerTest extends TestCase
 {
     protected $id;
-    protected $domain;
+    protected $url;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $faker = Factory::create();
-        $this->domain = $faker->url;
+        $this->url = $faker->url;
 
         $this->id = DB::table('domains')->insertGetId([
-            'name'       => $this->domain,
+            'name'       => $this->url,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -36,12 +36,12 @@ class DomainsControllerTest extends TestCase
 
     public function testStore()
     {
-        $response = $this->post(route('domains.store'), ['domain' => $this->domain]);
+        $response = $this->post(route('domains.store'), ['url' => $this->url]);
 
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 
-        $this->assertDatabaseHas('domains', ['name' => $this->domain]);
+        $this->assertDatabaseHas('domains', ['name' => $this->url]);
     }
 
     public function testShow()
