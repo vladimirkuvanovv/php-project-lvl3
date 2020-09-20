@@ -3,7 +3,6 @@
 @section('content')
 
     <div class="container">
-        @include('flash::message')
         <div class="row ">
             <div class="col-12">
                 <div class="caption">
@@ -44,7 +43,7 @@
                     <h3>Checks</h3>
                 </div>
 
-                <form action="{{ route('check', [$domain->id]) }}" method="post">
+                <form action="{{ route('domains.check.store', [$domain->id]) }}" method="post">
                     @csrf
                     <div class="btn-block">
                         <button type="submit" class="btn btn-primary">Run check</button>
