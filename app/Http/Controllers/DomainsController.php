@@ -20,9 +20,12 @@ class DomainsController extends Controller
             ->orderBy('id')
             ->get();
 
+        $domainIds = collect($domains)->map(fn($domain) => $domain->id);
+
         $domainsStatusCodes = DB::table('domain_checks')
             ->distinct()
             ->select('domain_id', 'status_code')
+            ->whereIn('domain_id', $domainIds)
             ->get();
         
         $lastChecks = collect($domainsStatusCodes)
@@ -39,9 +42,9 @@ class DomainsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['domain' => 'required|url|max:255']);
+        $request->validate(['url' => 'required|url|max:255']);
 
-        $url = $request->input('domain');
+        $url = $request->input('url');
         $domainParts = parse_url($url);
 
         $domainName = $domainParts['scheme'] . '://' . $domainParts['host'];
@@ -73,7 +76,7 @@ class DomainsController extends Controller
      */
     public function show($id)
     {
-        $domain = DB::table('domains')->select()->where('id', $id)->first();
+        $domain = DB::table('domains')->find($id);
         abort_unless((bool)$domain, 404);
 
         $domainChecks = DB::table('domain_checks')
@@ -82,6 +85,6 @@ class DomainsController extends Controller
             ->orderBy('domain_id')
             ->get();
 
-        return view('domains.show', ['domain' => $domain, 'domainChecks' => $domainChecks ?? []]);
+        return view('domains.show', ['domain' => $domain, 'domainChecks' => $domainChecks]);
     }
 }
