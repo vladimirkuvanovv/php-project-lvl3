@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Http;
 
 class DomainCheckController extends Controller
 {
-    private const MAX_LENGTH_STRING = 60;
     /**
      * Store a newly created resource in storage.
      *
@@ -31,16 +30,6 @@ class DomainCheckController extends Controller
             $h1 = optional($document->first('h1'))->text();
             $keywords = optional($document->first('meta[name=keywords]'))->getAttribute('content');
             $description = optional($document->first('meta[name=description]'))->getAttribute('content');
-
-            if (
-                mb_strlen($h1) > self::MAX_LENGTH_STRING ||
-                mb_strlen($keywords) > self::MAX_LENGTH_STRING ||
-                mb_strlen($description) > self::MAX_LENGTH_STRING
-            ) {
-                $h1 = mb_substr($h1, 0, self::MAX_LENGTH_STRING);
-                $keywords = mb_substr($keywords, 0, self::MAX_LENGTH_STRING);
-                $description = mb_substr($description, 0, self::MAX_LENGTH_STRING);
-            }
 
             DB::table('domain_checks')->insertGetId([
                 'domain_id'   => $id,

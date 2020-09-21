@@ -65,9 +65,9 @@
                         <tr>
                             <td>{{ $domainCheck->id }}</td>
                             <td>{{ $domainCheck->status_code }}</td>
-                            <td>{{ $domainCheck->h1 }}</td>
-                            <td>{{ $domainCheck->keywords }}</td>
-                            <td>{{ $domainCheck->description }}</td>
+                            <td>{{ Str::limit($domainCheck->h1, 60) }}</td>
+                            <td>{{ Str::limit($domainCheck->keywords, 60) }}</td>
+                            <td>{{ Str::limit($domainCheck->description, 60) }}</td>
                             <td>{{ $domainCheck->created_at }}</td>
                         </tr>
                     @endforeach
