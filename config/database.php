@@ -63,7 +63,7 @@ return [
             ]) : [],
         ],
 
-/*        'pgsql' => [
+        'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -71,21 +71,6 @@ return [
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-            'schema' => 'public',
-            'sslmode' => 'prefer',
-        ],*/
-
-        'pgsql' => [
-            'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', 'ec2-54-159-138-67.compute-1.amazonaws.com'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'da33rb71uvscdd'),
-            'username' => env('DB_USERNAME', 'hcqjhcajcwbuiu'),
-            'password' => env('DB_PASSWORD', 'accee07d89fb8999b6a62fb2788bb299bd06947979c53c6a6f7a903b86a619f4'),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
